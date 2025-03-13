@@ -13,7 +13,7 @@ Route::get('/', [HomeController::class, 'index']);
 
 Route::get('/level', [LevelController::class, 'index']);
 Route::get('/kategori', [KategoriController::class, 'index']);
-
+Route::get('/user', [UserController::class, 'index']);
 
 // Halaman Products dengan Prefix Route
 Route::prefix('category')->group(function () {

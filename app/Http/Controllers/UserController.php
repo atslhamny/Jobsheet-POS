@@ -2,13 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\UserModel;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    public function show($id, $name)
+    public function index()
     {
-        return view('users.profile', compact('id', 'name'));
+        $data = [
+            'nama' => 'Pelanggan Pertama',
+
+        ];
+        UserModel::where('username', 'customer-1')->update($data);
+
+        $user = UserModel::all();
+        return view('user', ['data' => $user]);
     }
 }
 
