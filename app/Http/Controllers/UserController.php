@@ -24,9 +24,12 @@ class UserController extends Controller
 
         $activeMenu = 'user'; // set menu yang sedang aktif
 
+        $level = LevelModel::all(); // Ambil semua data level dari model LevelModel
+
         return view('user.index', [
             'breadcrumb' => $breadcrumb,
             'page' => $page,
+            'level' => $level,
             'activeMenu' => $activeMenu
         ]);
     }
@@ -35,6 +38,12 @@ class UserController extends Controller
     public function list(Request $request)
     {
         $users = UserModel::select('user_id', 'username', 'nama', 'level_id')->with('level');
+
+        // Jika ada filter level_id dari request
+        if ($request->has('level_id') && $request->level_id != '') {
+            $users->where('level_id', $request->level_id);
+        }
+
 
         return DataTables::of($users)
             ->addIndexColumn() // kolom index/nomor urut
