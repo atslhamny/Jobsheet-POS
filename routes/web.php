@@ -7,9 +7,10 @@ use App\Http\Controllers\LevelController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SalesController;
+use App\Http\Controllers\WelcomeController;
 
 // Halaman Home
-Route::get('/', [HomeController::class, 'index']);
+// Route::get('/', [HomeController::class, 'index']);
 
 Route::get('/level', [LevelController::class, 'index']);
 Route::get('/kategori', [KategoriController::class, 'index']);
@@ -39,6 +40,9 @@ Route::get('/user/{id}/name/{name}', [UserController::class, 'show']);
 
 // Halaman Penjualan (POS)
 Route::get('/sales', [SalesController::class, 'index']);
+
+//JS 5
+Route::get('/', [WelcomeController::class, 'index']);
 
 
 ?>
