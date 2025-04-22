@@ -2,36 +2,24 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
-use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Model;
 
-class UserModel extends Authenticatable
+class UserModel extends Model
 {
     use HasFactory;
 
-    protected $table = 'm_user';
-    protected $primaryKey = 'user_id'; // Mendefinisikan primary key dari tabel yang digunakan
+    protected $table = 'm_user'; // nama tabel
+    protected $primaryKey = 'user_id'; // primary key bukan "id"
 
-    protected $fillable = ['level_id', 'username', 'nama', 'password' ]; // Mendefinisikan kolom yang dapat diisi oleh user
+    public $timestamps = false; // jika tabel tidak punya kolom created_at dan updated_at
 
-    // public function level(): HasOne
-    // {
-    //     return $this->HasOne(LevelModel::class, 'level_id', 'level_id');
-    // }
+    protected $fillable = ['username', 'nama', 'password', 'level_id'];
 
-    // public function level(): HasMany
-    // {
-    //     return $this->hasMany(LevelModel::class, 'level_id', 'level_id');
-    // }
-
-    public function level(): BelongsTo
+    public function level()
     {
-        return $this->belongsTo(LevelModel::class, 'level_id', 'level_id');
+        return $this->hasOne(LevelModel::class, 'level_id', 'level_id');
     }
-
 }
+
+?>
