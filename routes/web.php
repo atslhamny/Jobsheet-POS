@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\KategoriController;
@@ -14,6 +15,21 @@ use App\Http\Controllers\StokController;
 
 // Halaman Home
 // Route::get('/', [HomeController::class, 'index']);
+
+Route::pattern('id', '[0-9]+'); // Menentukan pola untuk parameter id
+Route::get('login', [AuthController::class, 'login'])->name('login');
+Route::post('login', [AuthController::class, 'postlogin']);
+Route::get('logout', [AuthController::class, 'logout'])->middleware('auth');
+
+Route::middleware(['auth'])->group(function () { // artinya semua route di dalam group ini harus login dulu
+    // masukan semua route yang perlu authentikasi di sini
+
+    Route::get('/', function () {
+        return view('welcome');
+    });
+});
+
+
 
 Route::get('/level', [LevelController::class, 'index']);
 Route::get('/kategori', [KategoriController::class, 'index']);
