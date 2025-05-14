@@ -29,9 +29,17 @@ Route::middleware(['auth'])->group(function () { // artinya semua route di dalam
     });
 });
 
+Route::middleware(['authorize:ADM'])->group(function() { // artinya semua route di dalam group ini harus login dulu
+    // masukan semua route yang perlu authentikasi di sini
+    Route::get('/level', [LevelController::class, 'index']);
+    Route::post('/level/list', [LevelController::class, 'list']);
+    Route::get('/level/create', [LevelController::class, 'create']);
+    Route::post('/level', [LevelController::class, 'store']);
+    Route::get('/level/{id}/edit', [LevelController::class, 'edit']);
+    Route::put('/level/{id}', [LevelController::class, 'update']);
+    Route::delete('/level/{id}', [LevelController::class, 'destroy']);
+});
 
-
-Route::get('/level', [LevelController::class, 'index']);
 Route::get('/kategori', [KategoriController::class, 'index']);
 Route::get('/user', [UserController::class, 'index']);
 Route::get('/user/tambah', [UserController::class, 'tambah']);
