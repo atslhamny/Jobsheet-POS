@@ -52,8 +52,9 @@ Route::middleware(['auth'])->group(function () { // artinya semua route di dalam
         Route::get('/barang/{id}/edit_ajax', [BarangController::class, 'edit_ajax']);
         Route::put('/barang/{id}/update_ajax', [BarangController::class, 'update_ajax']);
         Route::delete('/barang/{id}/delete_ajax', [BarangController::class, 'delete_ajax']);
-        Route::get('barang/import', [BarangController::class, 'import']);
-        Route::post('barang/import_ajax', [BarangController::class, 'import_ajax']);
+        Route::get('/barang/import', [BarangController::class, 'import']);
+        Route::post('/barang/import_ajax', [BarangController::class, 'import_ajax']);
+        Route::get('/barang/export_excel', [BarangController::class, 'export_excel']);
     });
 
     Route::middleware(['authorize:ADM,MNG,STF'])->group(function () { // artinya semua route di dalam group ini harus login dulu
