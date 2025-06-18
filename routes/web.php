@@ -31,62 +31,70 @@ Route::middleware(['auth'])->group(function () { // artinya semua route di dalam
     Route::get('/', function () {
         return view('welcome');
     });
+
+    Route::middleware(['auth', 'authorize:ADM'])->group(function () { // artinya semua route di dalam group ini harus login dulu
+        // masukan semua route yang perlu authentikasi di sini
+        Route::get('/level', [LevelController::class, 'index']);
+        Route::post('/level/list', [LevelController::class, 'list']);
+        Route::get('/level/create', [LevelController::class, 'create']);
+        Route::post('/level', [LevelController::class, 'store']);
+        Route::get('/level/{id}/edit', [LevelController::class, 'edit']);
+        Route::put('/level/{id}', [LevelController::class, 'update']);
+        Route::delete('/level/{id}', [LevelController::class, 'destroy']);
+    });
+
+    Route::middleware(['authorize:ADM,MNG'])->group(function () { // artinya semua route di dalam group ini harus login dulu
+        // masukan semua route yang perlu authentikasi di sini
+        Route::get('/barang', [BarangController::class, 'index']);
+        Route::post('/barang/list', [BarangController::class, 'list']);
+        Route::get('/barang/create_ajax', [BarangController::class, 'create_ajax']);
+        Route::post('/barang_ajax', [BarangController::class, 'store_ajax']);
+        Route::get('/barang/{id}/edit_ajax', [BarangController::class, 'edit_ajax']);
+        Route::put('/barang/{id}/update_ajax', [BarangController::class, 'update_ajax']);
+        Route::delete('/barang/{id}/delete_ajax', [BarangController::class, 'delete_ajax']);
+        Route::get('barang/import', [BarangController::class, 'import']);
+        Route::post('barang/import_ajax', [BarangController::class, 'import_ajax']);
+    });
+
+    Route::middleware(['authorize:ADM,MNG,STF'])->group(function () { // artinya semua route di dalam group ini harus login dulu
+        // masukan semua route yang perlu authentikasi di sini
+        Route::get('/kategori', [KategoriController::class, 'index']);
+        Route::post('/kategori/list', [KategoriController::class, 'list']);
+        Route::get('/kategori/create', [KategoriController::class, 'create']);
+        Route::post('/kategori', [KategoriController::class, 'store']);
+        Route::get('/kategori/{id}/edit', [KategoriController::class, 'edit']);
+        Route::put('/kategori/{id}', [KategoriController::class, 'update']);
+        Route::delete('/kategori/{id}', [KategoriController::class, 'destroy']);
+        route::get('/kategori/import', [KategoriController::class, 'import']);
+        route::post('/kategori/import_ajax', [KategoriController::class, 'import_ajax']);
+    });
+
+    Route::middleware(['authorize:ADM,MNG'])->group(function () { // artinya semua route di dalam group ini harus login dulu
+        // masukan semua route yang perlu authentikasi di sini
+        Route::get('/supplier', [SupplierController::class, 'index']);
+        Route::post('/supplier/list', [SupplierController::class, 'list']);
+        Route::get('/supplier/create', [SupplierController::class, 'create']);
+        Route::post('/supplier', [SupplierController::class, 'store']);
+        Route::get('/supplier/{id}/edit', [SupplierController::class, 'edit']);
+        Route::put('/supplier/{id}', [SupplierController::class, 'update']);
+        Route::delete('/supplier/{id}', [SupplierController::class, 'destroy']);
+        Route::get('/supplier/import', [SupplierController::class, 'import']);
+        Route::post('/supplier/import_ajax', [SupplierController::class, 'import_ajax']);
+    });
+
+    Route::middleware(['authorize:ADM,STF,KSR'])->group(function () { // artinya semua route di dalam group ini harus login dulu
+        // masukan semua route yang perlu authentikasi di sini
+        Route::get('/stok', [StokController::class, 'index']);
+        Route::post('/stok/list', [StokController::class, 'list']);
+        Route::get('/stok/create', [StokController::class, 'create']);
+        Route::post('/stok', [StokController::class, 'store']);
+        Route::get('/stok/{id}/edit', [StokController::class, 'edit']);
+        Route::put('/stok/{id}', [StokController::class, 'update']);
+        Route::delete('/stok/{id}', [StokController::class, 'destroy']);
+    });
 });
 
-Route::middleware(['authorize:ADM'])->group(function() { // artinya semua route di dalam group ini harus login dulu
-    // masukan semua route yang perlu authentikasi di sini
-    Route::get('/level', [LevelController::class, 'index']);
-    Route::post('/level/list', [LevelController::class, 'list']);
-    Route::get('/level/create', [LevelController::class, 'create']);
-    Route::post('/level', [LevelController::class, 'store']);
-    Route::get('/level/{id}/edit', [LevelController::class, 'edit']);
-    Route::put('/level/{id}', [LevelController::class, 'update']);
-    Route::delete('/level/{id}', [LevelController::class, 'destroy']);
-});
 
-Route::middleware(['authorize:ADM,MNG'])->group(function() { // artinya semua route di dalam group ini harus login dulu
-    // masukan semua route yang perlu authentikasi di sini
-    Route::get('/barang', [BarangController::class, 'index']);
-    Route::post('/barang/list', [BarangController::class, 'list']);
-    Route::get('/barang/create', [BarangController::class, 'create']);
-    Route::post('/barang', [BarangController::class, 'store']);
-    Route::get('/barang/{id}/edit', [BarangController::class, 'edit']);
-    Route::put('/barang/{id}', [BarangController::class, 'update']);
-    Route::delete('/barang/{id}', [BarangController::class, 'destroy']);
-});
-
-Route::middleware(['authorize:ADM,MNG,STF'])->group(function() { // artinya semua route di dalam group ini harus login dulu
-    // masukan semua route yang perlu authentikasi di sini
-    Route::get('/kategori', [KategoriController::class, 'index']);
-    Route::post('/kategori/list', [KategoriController::class, 'list']);
-    Route::get('/kategori/create', [KategoriController::class, 'create']);
-    Route::post('/kategori', [KategoriController::class, 'store']);
-    Route::get('/kategori/{id}/edit', [KategoriController::class, 'edit']);
-    Route::put('/kategori/{id}', [KategoriController::class, 'update']);
-    Route::delete('/kategori/{id}', [KategoriController::class, 'destroy']);
-});
-
-Route::middleware(['authorize:ADM,MNG'])->group(function() { // artinya semua route di dalam group ini harus login dulu
-    // masukan semua route yang perlu authentikasi di sini
-    Route::get('/supplier', [SupplierController::class, 'index']);
-    Route::post('/supplier/list', [SupplierController::class, 'list']);
-    Route::get('/supplier/create', [SupplierController::class, 'create']);
-    Route::post('/supplier', [SupplierController::class, 'store']);
-    Route::get('/supplier/{id}/edit', [SupplierController::class, 'edit']);
-    Route::put('/supplier/{id}', [SupplierController::class, 'update']);
-    Route::delete('/supplier/{id}', [SupplierController::class, 'destroy']);
-});
-
-Route::middleware(['authorize:ADM,STF,KSR'])->group(function() { // artinya semua route di dalam group ini harus login dulu
-    // masukan semua route yang perlu authentikasi di sini
-    Route::get('/stok', [StokController::class, 'index']);
-    Route::post('/stok/list', [StokController::class, 'list']);
-    Route::get('/stok/create', [StokController::class, 'create']);
-    Route::post('/stok', [StokController::class, 'store']);
-    Route::get('/stok/{id}/edit', [StokController::class, 'edit']);
-    Route::put('/stok/{id}', [StokController::class, 'update']);
-    Route::delete('/stok/{id}', [StokController::class, 'destroy']);
-});
 
 
 Route::get('/kategori', [KategoriController::class, 'index']);
